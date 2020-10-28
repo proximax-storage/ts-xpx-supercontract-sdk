@@ -11,13 +11,13 @@ function toHexString(buf: ArrayBuffer): string {
 }
 
 export namespace transactions {
-    enum MosaicPropertyId {
+    export enum MosaicPropertyId {
         MosaicPropertyFlagsId,
         MosaicPropertyDivisibilityId,
         MosaicPropertyDurationId
     }
 
-    class MosaicProperty extends Encodable {
+    export class MosaicProperty extends Encodable {
         Id: MosaicPropertyId;
         Value: i64;
 
@@ -29,7 +29,7 @@ export namespace transactions {
         }
     }
 
-    class MosaicProperties extends Encodable {
+    export class MosaicProperties extends Encodable {
         SupplyMutable: bool;
         Transferable: bool;
         Divisibility: u8;
@@ -46,7 +46,7 @@ export namespace transactions {
         }
     }
 
-    class MosaicDefinition extends Encodable {
+    export class MosaicDefinition extends Encodable {
         Nonce: u32;
         OwnerPublicKey: string = "";
         MosaicProps: MosaicProperties | null;
@@ -64,12 +64,12 @@ export namespace transactions {
         }
     }
 
-    enum AliasActionType {
+    export enum AliasActionType {
         AliasLink,
         AliasUnlink
     }
 
-    class AddressAlias extends Encodable {
+    export class AddressAlias extends Encodable {
         Address: string = "";
         NamespaceId: u64;
         ActionType: AliasActionType;
@@ -84,7 +84,7 @@ export namespace transactions {
         }
     }
 
-    class MosaicAlias extends Encodable {
+    export class MosaicAlias extends Encodable {
         MosaicId: u64;
         NamespaceId: u64;
         ActionType: AliasActionType;
@@ -99,7 +99,7 @@ export namespace transactions {
         }
     }
 
-    class Mosaic extends Encodable {
+    export class Mosaic extends Encodable {
         AssetId: u64;
         Amount: u64;
 
@@ -111,13 +111,13 @@ export namespace transactions {
         }
     }
 
-    enum OfferType {
+    export enum OfferType {
         SellOffer,
         BuyOffer,
         UnknownType
     }
 
-    class AddOffer extends Encodable {
+    export class AddOffer extends Encodable {
         OfferType: OfferType;
         Mosaic: Mosaic = new Mosaic();
         Cost: u64;
@@ -134,7 +134,7 @@ export namespace transactions {
         }
     }
 
-    class AddExchangeOffer extends Encodable {
+    export class AddExchangeOffer extends Encodable {
         AddOffers: Array<AddOffer> = [];
 
         encode(encoder: Encoder): void {
@@ -144,7 +144,7 @@ export namespace transactions {
         }
     }
 
-    class PublicAccount extends Encodable {
+    export class PublicAccount extends Encodable {
         PublicKey: string = "";
 
         encode(encoder: Encoder): void {
@@ -154,7 +154,7 @@ export namespace transactions {
         }
     }
 
-    class ExchangeConfirmation extends Encodable {
+    export class ExchangeConfirmation extends Encodable {
         OfferType: OfferType;
         Mosaic: Mosaic = new Mosaic();
         Cost: u64;
@@ -170,7 +170,7 @@ export namespace transactions {
         }
     }
 
-    class ExchangeOffer extends Encodable {
+    export class ExchangeOffer extends Encodable {
         Offer: Array<ExchangeConfirmation> = [];
 
         encode(encoder: Encoder): void {
@@ -180,7 +180,7 @@ export namespace transactions {
         }
     }
 
-    class Transfer extends Encodable {
+    export class Transfer extends Encodable {
         Address: string = "";
         AssetId: u64;
         Amount: u64;
@@ -194,7 +194,7 @@ export namespace transactions {
         }
     }
 
-    class RemoveOffer extends Encodable {
+    export class RemoveOffer extends Encodable {
         OfferType: OfferType;
         AssetId: u64;
 
@@ -206,7 +206,7 @@ export namespace transactions {
         }
     }
 
-    class RemoveExchangeOffer extends Encodable {
+    export class RemoveExchangeOffer extends Encodable {
         RemoveOffers: Array<RemoveOffer> = [];
 
         encode(encoder: Encoder): void {
@@ -216,12 +216,12 @@ export namespace transactions {
         }
     }
 
-    enum MosaicSupplyType {
+    export enum MosaicSupplyType {
         Decrease,
         Increase
     }
 
-    class MosaicSupplyChange extends Encodable {
+    export class MosaicSupplyChange extends Encodable {
         SupplyType: MosaicSupplyType;
         AssetId: u64;
         Delta: u64;
@@ -235,7 +235,7 @@ export namespace transactions {
         }
     }
 
-    class RegisterRootNamespace extends Encodable {
+    export class RegisterRootNamespace extends Encodable {
         NamespaceName: string = "";
         Duration: u64;
 
@@ -247,7 +247,7 @@ export namespace transactions {
         }
     }
 
-    class RegisterSubNamespace extends Encodable {
+    export class RegisterSubNamespace extends Encodable {
         NamespaceName: string = "";
         ParentId: u64 = 0;
 
@@ -261,7 +261,7 @@ export namespace transactions {
         }
     }
 
-    enum HashType {
+    export enum HashType {
         // / Input is hashed using Sha-3-256.
         SHA3_256,
         // / Input is hashed using Keccak-256.
@@ -274,7 +274,7 @@ export namespace transactions {
         Internal_Hash_Type
     }
 
-    class Secret extends Encodable {
+    export class Secret extends Encodable {
         Hash: string = "";
         HashType: HashType;
 
@@ -286,7 +286,7 @@ export namespace transactions {
         }
     }
 
-    class SecretLock extends Encodable {
+    export class SecretLock extends Encodable {
         Mosaic: Mosaic = new Mosaic();
         Duration: u64;
         Secret: Secret = new Secret();
@@ -302,7 +302,7 @@ export namespace transactions {
         }
     }
 
-    class Proof extends Encodable {
+    export class Proof extends Encodable {
         Data: Array<u8> = [];
 
         encode(encoder: Encoder): void {
@@ -312,7 +312,7 @@ export namespace transactions {
         }
     }
 
-    class SecretProof extends Encodable {
+    export class SecretProof extends Encodable {
         HashType: HashType;
         Proof: Proof = new Proof();
         Recipient: string = "";
@@ -326,7 +326,7 @@ export namespace transactions {
         }
     }
 
-    class TransferWithNamespace extends Encodable {
+    export class TransferWithNamespace extends Encodable {
         Message: string = "";
         Mosaics: Array<Mosaic> = [];
         Recipient: u64;
@@ -340,12 +340,12 @@ export namespace transactions {
         }
     }
 
-    enum MetadataModificationType {
+    export enum MetadataModificationType {
         AddMetadata,
         RemoveMetadata
     }
 
-    class MetadataModification extends Encodable {
+    export class MetadataModification extends Encodable {
         Type: MetadataModificationType;
         Key: string = "";
         Value: string = "";
@@ -359,7 +359,7 @@ export namespace transactions {
         }
     }
 
-    class ModifyMetadataAddress extends Encodable {
+    export class ModifyMetadataAddress extends Encodable {
         Address: string = "";
         MetadataModifications: Array<MetadataModification> = [];
 
@@ -371,7 +371,7 @@ export namespace transactions {
         }
     }
 
-    class ModifyMetadataMosaic extends Encodable {
+    export class ModifyMetadataMosaic extends Encodable {
         MosaicId: u64;
         MetadataModifications: Array<MetadataModification> = [];
 
@@ -383,7 +383,7 @@ export namespace transactions {
         }
     }
 
-    class ModifyMetadataNamespace extends Encodable {
+    export class ModifyMetadataNamespace extends Encodable {
         NamespaceId: u64;
         MetadataModifications: Array<MetadataModification> = [];
 

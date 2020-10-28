@@ -3,7 +3,7 @@ import {Encodable, Encoder, Options, Result, Status} from "./common";
 import {loadData} from "./internal"
 import {transactions} from "./transactions";
 
-function upload_transaction(tx: Encodable, f: (data: usize, dataLen: usize) => i64): Status {
+export function upload_transaction(tx: Encodable, f: (data: usize, dataLen: usize) => i64): Status {
     const encoder = new Encoder();
     tx.encode(encoder);
     const bytes = String.UTF8.encode(encoder.toString());
@@ -16,7 +16,12 @@ function upload_transaction(tx: Encodable, f: (data: usize, dataLen: usize) => i
 }
 
 export namespace blockchain {
-    function flush(): Status {
+    /**
+     * Flush transactions from pool to blockchain.
+     *
+     * @returns Status about this operation
+     */
+    export function flush(): Status {
         const result = extern.flush();
         if (result < 0) {
             return Status.ErrorExternalFunctionExecution;
@@ -25,67 +30,163 @@ export namespace blockchain {
         return Status.Success;
     }
 
-    function mosaic_definition(tx: transactions.MosaicDefinition): Status {
+    /**
+     * Add MosaicDefinition to pool of transactions.
+     *
+     * @param {transactions.MosaicDefinition} tx - MosaicDefinition transaction
+     * @returns {Status} status of this operation
+     */
+    export function mosaic_definition(tx: transactions.MosaicDefinition): Status {
         return upload_transaction(tx, extern.mosaic_definition);
     }
 
-    function address_alias(tx: transactions.AddressAlias): Status {
+    /**
+     * Add AddressAlias to pool of transactions.
+     *
+     * @param {transactions.AddressAlias} tx - AddressAlias transaction
+     * @returns {Status} status of this operation
+     */
+    export function address_alias(tx: transactions.AddressAlias): Status {
         return upload_transaction(tx, extern.address_alias);
     }
 
-    function mosaic_alias(tx: transactions.MosaicAlias): Status {
+    /**
+     * Add MosaicAlias to pool of transactions.
+     *
+     * @param {transactions.MosaicAlias} tx - MosaicAlias transaction
+     * @returns {Status} status of this operation
+     */
+    export function mosaic_alias(tx: transactions.MosaicAlias): Status {
         return upload_transaction(tx, extern.mosaic_alias);
     }
 
-    function add_exchange_offer(tx: transactions.AddExchangeOffer): Status {
+    /**
+     * Add AddExchangeOffer to pool of transactions.
+     *
+     * @param {transactions.AddExchangeOffer} tx - AddExchangeOffer transaction
+     * @returns {Status} status of this operation
+     */
+    export function add_exchange_offer(tx: transactions.AddExchangeOffer): Status {
         return upload_transaction(tx, extern.add_exchange_offer);
     }
 
-    function exchange_offer(tx: transactions.ExchangeOffer): Status {
+    /**
+     * Add ExchangeOffer to pool of transactions.
+     *
+     * @param {transactions.ExchangeOffer} tx - ExchangeOffer transaction
+     * @returns {Status} status of this operation
+     */
+    export function exchange_offer(tx: transactions.ExchangeOffer): Status {
         return upload_transaction(tx, extern.exchange_offer);
     }
 
-    function transfer(tx: transactions.Transfer): Status {
+    /**
+     * Add Transfer to pool of transactions.
+     *
+     * @param {transactions.Transfer} tx - Transfer transaction
+     * @returns {Status} status of this operation
+     */
+    export function transfer(tx: transactions.Transfer): Status {
         return upload_transaction(tx, extern.transfer);
     }
 
-    function remove_exchange_offer(tx: transactions.RemoveExchangeOffer): Status {
+    /**
+     * Add RemoveExchangeOffer to pool of transactions.
+     *
+     * @param {transactions.RemoveExchangeOffer} tx - RemoveExchangeOffer transaction
+     * @returns {Status} status of this operation
+     */
+    export function remove_exchange_offer(tx: transactions.RemoveExchangeOffer): Status {
         return upload_transaction(tx, extern.remove_exchange_offer);
     }
 
-    function mosaic_supply_change(tx: transactions.MosaicSupplyChange): Status {
+    /**
+     * Add MosaicSupplyChange to pool of transactions.
+     *
+     * @param {transactions.MosaicSupplyChange} tx - MosaicSupplyChange transaction
+     * @returns {Status} status of this operation
+     */
+    export function mosaic_supply_change(tx: transactions.MosaicSupplyChange): Status {
         return upload_transaction(tx, extern.mosaic_supply_change);
     }
 
-    function register_root_namespace(tx: transactions.RegisterRootNamespace): Status {
+    /**
+     * Add RegisterRootNamespace to pool of transactions.
+     *
+     * @param {transactions.RegisterRootNamespace} tx - RegisterRootNamespace transaction
+     * @returns {Status} status of this operation
+     */
+    export function register_root_namespace(tx: transactions.RegisterRootNamespace): Status {
         return upload_transaction(tx, extern.register_root_namespace);
     }
 
-    function register_sub_namespace(tx: transactions.RegisterSubNamespace): Status {
+    /**
+     * Add RegisterSubNamespace to pool of transactions.
+     *
+     * @param {transactions.RegisterSubNamespace} tx - RegisterSubNamespace transaction
+     * @returns {Status} status of this operation
+     */
+    export function register_sub_namespace(tx: transactions.RegisterSubNamespace): Status {
         return upload_transaction(tx, extern.register_sub_namespace);
     }
 
-    function secret_lock(tx: transactions.SecretLock): Status {
+    /**
+     * Add SecretLock to pool of transactions.
+     *
+     * @param {transactions.SecretLock} tx - SecretLock transaction
+     * @returns {Status} status of this operation
+     */
+    export function secret_lock(tx: transactions.SecretLock): Status {
         return upload_transaction(tx, extern.secret_lock);
     }
 
-    function secret_proof(tx: transactions.SecretProof): Status {
+    /**
+     * Add SecretProof to pool of transactions.
+     *
+     * @param {transactions.SecretProof} tx - SecretProof transaction
+     * @returns {Status} status of this operation
+     */
+    export function secret_proof(tx: transactions.SecretProof): Status {
         return upload_transaction(tx, extern.secret_proof);
     }
 
-    function transfer_with_namespace(tx: transactions.TransferWithNamespace): Status {
+    /**
+     * Add TransferWithNamespace to pool of transactions.
+     *
+     * @param {transactions.TransferWithNamespace} tx - TransferWithNamespace transaction
+     * @returns {Status} status of this operation
+     */
+    export function transfer_with_namespace(tx: transactions.TransferWithNamespace): Status {
         return upload_transaction(tx, extern.transfer_with_namespace);
     }
 
-    function modify_metadata_address(tx: transactions.ModifyMetadataAddress): Status {
+    /**
+     * Add ModifyMetadataAddress to pool of transactions.
+     *
+     * @param {transactions.ModifyMetadataAddress} tx - ModifyMetadataAddress transaction
+     * @returns {Status} status of this operation
+     */
+    export function modify_metadata_address(tx: transactions.ModifyMetadataAddress): Status {
         return upload_transaction(tx, extern.modify_metadata_address);
     }
 
-    function modify_metadata_mosaic(tx: transactions.ModifyMetadataMosaic): Status {
+    /**
+     * Add ModifyMetadataMosaic to pool of transactions.
+     *
+     * @param {transactions.ModifyMetadataMosaic} tx - ModifyMetadataMosaic transaction
+     * @returns {Status} status of this operation
+     */
+    export function modify_metadata_mosaic(tx: transactions.ModifyMetadataMosaic): Status {
         return upload_transaction(tx, extern.modify_metadata_mosaic);
     }
 
-    function modify_metadata_namespace(tx: transactions.ModifyMetadataNamespace): Status {
+    /**
+     * Add ModifyMetadataNamespace to pool of transactions.
+     *
+     * @param {transactions.ModifyMetadataNamespace} tx - ModifyMetadataNamespace transaction
+     * @returns {Status} status of this operation
+     */
+    export function modify_metadata_namespace(tx: transactions.ModifyMetadataNamespace): Status {
         return upload_transaction(tx, extern.modify_metadata_namespace);
     }
 }

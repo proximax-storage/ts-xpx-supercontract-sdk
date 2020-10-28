@@ -1,5 +1,8 @@
 import {JSONEncoder} from "assemblyscript-json";
 
+/**
+ * Status of external function execution
+ */
 export enum Status {
     Success,
     ErrorMemoryAllocation,
@@ -9,6 +12,9 @@ export enum Status {
     ErrorConstructorFired = -38
 }
 
+/**
+ * Aggregate class to store status and result of execution
+ */
 export class Result<T> {
     Status : Status;
     Data: T | null;
@@ -23,6 +29,10 @@ export const KiloByte = 1024;
 export const MegaByte = 1024 * KiloByte;
 export const GigaByte = 1024 * MegaByte;
 
+
+/**
+ * Some function requires additional parameters for execution
+ */
 @unmanaged
 export class Options {
     /**
@@ -48,6 +58,9 @@ export class Options {
     }
 }
 
+/**
+ * Abstract class for JSON encoder
+ */
 export abstract class Encodable {
     abstract encode(encoder: Encoder): void;
 
@@ -59,6 +72,9 @@ export abstract class Encodable {
     }
 }
 
+/**
+ * Help class to create JSON from objects
+ */
 export class Encoder extends JSONEncoder {
     pushObject(name: string | null = null, object: Encodable | null = null): bool {
         // @ts-ignore: decorator

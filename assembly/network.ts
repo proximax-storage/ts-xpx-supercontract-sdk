@@ -1,19 +1,21 @@
 import { extern } from "./env";
-import {Options, Result, Status} from "./common";
-import {loadData} from "./internal"
-import {JSONEncoder} from "assemblyscript-json"
+import {Options, Result, Encoder, Encodable} from "./common";
+import { loadData } from "./internal"
 
 export namespace network {
-    class HttpRequest {
+    /**
+     * Help class to create and send http requests.
+     */
+    export class HttpRequest extends Encodable {
         url: string;
         headers: Map<string,string>;
         constructor(url: string) {
+            super();
             this.url = url;
             this.headers = new Map<string,string>();
         }
 
-        toString(): string {
-            const encoder = new JSONEncoder();
+        encode(encoder: Encoder): void {
             encoder.pushObject(null);
             encoder.setString("url", this.url);
             encoder.pushObject("headers");
@@ -24,8 +26,6 @@ export namespace network {
             }
             encoder.popObject();
             encoder.popObject();
-
-            return encoder.toString();
         }
 
         send(op: Options = Options.Default()): Result<ArrayBuffer> {
